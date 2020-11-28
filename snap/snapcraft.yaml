@@ -1,0 +1,47 @@
+name: a1fbox-spamblock
+version: "0.20201027"
+summary: Block cold-calls in Germany
+description: |
+  Tools to block unwanted cold-calls in Germany via a fritzbox. 
+  It's a snap of https://github.com/bufemc/a1fbox
+base: core18
+confinement: strict
+
+parts:
+  a1fbox:
+    plugin: python
+    python-version: python3
+    requirements: [requirements.txt]
+    override-build: |
+      # XXX: submit upstream
+      cat <<EOF>setup.py 
+      import setuptools,glob
+      setuptools.setup(
+        name="a1fbox",
+        version="0.0.1",
+        url="https://github.com/bufemc/a1fbox",
+        packages=setuptools.find_packages(),
+        # HACK: make a1fbox look at some PATH defined location
+        data_files=[("lib/python3.6/site-packages/data", glob.glob("data/*"))],
+        python_requires='>=3.6',
+      )
+      EOF
+      snapcraftctl build
+    source: https://github.com/bufemc/a1fbox.git
+  blocker:
+    plugin: nil
+    source: .
+    override-build: |
+      cp callblocker.py $SNAPCRAFT_PART_INSTALL/callblocker.py
+      chmod +x $SNAPCRAFT_PART_INSTALL/callblocker.py
+    
+apps:
+  blocker:
+    command: ./callblocker.py
+    daemon: simple
+    plugs:
+      - network
+      - network-bind
+    environment:
+      # slightly ugly, config.py is imported so data dir needs to be first
+      PYTHONPATH: $SNAP_DATA:$SNAP/lib/python3.6/site-packages:$SNAP/lib/python3.6/dist-packages:$PYTHONPATH
