@@ -7,6 +7,7 @@ FRITZ_PASSWORD=$(snapctl get password)
 FRITZ_IP_ADDRESS=$(snapctl get ip-address)
 # secret bot-number:token
 TELEGRAM_BOT_SECRET=$(snapctl get telegram-bot-secret)
+TELEGRAM_BOT_CHAT_ID=$(snapctl get telegram-bot-chat-id)
 if [ "$FRITZ_IP_ADDRESS" = "" ]; then
     FRITZ_IP_ADDRESS="fritz.box"
 fi
@@ -17,5 +18,5 @@ FRITZ_PASSWORD="$FRITZ_PASSWORD"
 FRITZ_IP_ADDRESS="$FRITZ_IP_ADDRESS"
 FRITZ_TCP_PORT = 49000
 FRITZ_TLS_PORT = 49443
-TELEGRAM_BOT_URL="https://api.telegram.org/$TELEGRAM_BOT_SECRET/sendMessage?chat_id=CHAT_ID&text="
+TELEGRAM_BOT_URL="https://api.telegram.org/bot${TELEGRAM_BOT_SECRET}/sendMessage?chat_id=${TELEGRAM_BOT_CHAT_ID}&text="
 EOF

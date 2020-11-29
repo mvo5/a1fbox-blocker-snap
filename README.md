@@ -18,6 +18,7 @@ snap set a1fbox-spamblock password="password"
 # optional, fritz.box is the default
 snap set a1fbox-spamblock ip-address="192.168.178.1"
 snap set a1fbox-spamblock telegram-bot-secret="botNumber:token"
+snap set a1fbox-spamblock telegram-bot-chat-id="@userToSendMsgsTo"
 ```
 
 ## Telegram bot
@@ -30,3 +31,6 @@ UserNameOfTheBot
 ```
 this will give you a botNumber:secret that you can configure
 above.
+
+The telegram-chat-id is the name of the user/group that the
+messages should go to.
