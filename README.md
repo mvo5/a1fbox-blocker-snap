@@ -9,8 +9,11 @@ Setup is still a bit complicated.
 
 Make sure your Fritzbox has 3 Phonebooks, the first is your
 regular one. The second and third are the "spam" blocker 
-books. Also make sure that you allow call monitoring, dial
-`#96*5*` to enable it.
+books. Make sure you setup a rule in "Rumunleitung" to redirect
+calls in these books to "answer machine" (or block them).
+
+Also make sure that you allow call monitoring, dial `#96*5*` to enable
+it.
 
 ```
 snap set a1fbox-spamblock username="username"
