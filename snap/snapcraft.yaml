@@ -35,7 +35,7 @@ parts:
                    # ToDo: add that an event is only posted once if same full_number and e.g. not same minute
                    if TELEGRAM_BOT_URL:
       -                requests.get(TELEGRAM_BOT_URL + quote("CallBlocker: " + raw_line))
-      +                requests.get(TELEGRAM_BOT_URL + quote("CallBlocker: " + parsed_line))
+      +                requests.get(TELEGRAM_BOT_URL + quote("CallBlocker: " + str(parsed_line)))
 
 
        if __name__ == "__main__":
