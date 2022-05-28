@@ -1,5 +1,5 @@
 name: a1fbox-spamblock
-version: "0.20201027"
+version: "0.20220528"
 summary: Block cold-calls in Germany
 description: |
   Tools to block unwanted cold-calls in Germany via a fritzbox. 
@@ -25,6 +25,21 @@ parts:
         data_files=[("lib/python3.6/site-packages/data", glob.glob("data/*"))],
         python_requires='>=3.6',
       )
+      EOF
+      patch -p1 <<'EOF'
+      diff --git a/a1fbox/callblocker.py b/a1fbox/callblocker.py
+      index 0e96571..64e62ee 100644
+      --- a/a1fbox/callblocker.py
+      +++ b/a1fbox/callblocker.py
+      @@ -225,7 +225,7 @@ class CallBlocker:
+
+                   # ToDo: add that an event is only posted once if same full_number and e.g. not same minute
+                   if TELEGRAM_BOT_URL:
+      -                requests.get(TELEGRAM_BOT_URL + quote("CallBlocker: " + raw_line))
+      +                requests.get(TELEGRAM_BOT_URL + quote("CallBlocker: " + parsed_line))
+
+
+       if __name__ == "__main__":
       EOF
       snapcraftctl build
     source: https://github.com/bufemc/a1fbox.git
