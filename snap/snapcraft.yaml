@@ -4,13 +4,12 @@ summary: Block cold-calls in Germany
 description: |
   Tools to block unwanted cold-calls in Germany via a fritzbox. 
   It's a snap of https://github.com/bufemc/a1fbox
-base: core18
+base: core20
 confinement: strict
 
 parts:
   a1fbox:
     plugin: python
-    python-version: python3
     requirements: [requirements.txt]
     override-build: |
       # XXX: submit upstream
@@ -22,8 +21,8 @@ parts:
         url="https://github.com/bufemc/a1fbox",
         packages=setuptools.find_packages(),
         # HACK: make a1fbox look at some PATH defined location
-        data_files=[("lib/python3.6/site-packages/data", glob.glob("data/*"))],
-        python_requires='>=3.6',
+        data_files=[("lib/python3.8/site-packages/data", glob.glob("data/*"))],
+        python_requires='>=3.8',
       )
       EOF
       patch -p1 <<'EOF'
@@ -59,4 +58,4 @@ apps:
       - network-bind
     environment:
       # slightly ugly, config.py is imported so data dir needs to be first
-      PYTHONPATH: $SNAP_DATA:$SNAP/lib/python3.6/site-packages:$SNAP/lib/python3.6/dist-packages:$PYTHONPATH
+      PYTHONPATH: $SNAP_DATA:$SNAP/lib/python3.8/site-packages:$SNAP/lib/python3.8/dist-packages:$PYTHONPATH
