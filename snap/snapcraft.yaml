@@ -27,18 +27,19 @@ parts:
       EOF
       patch -p1 <<'EOF'
       diff --git a/a1fbox/callblocker.py b/a1fbox/callblocker.py
-      index 0e96571..64e62ee 100644
+      index d60d237..1f02472 100644
       --- a/a1fbox/callblocker.py
       +++ b/a1fbox/callblocker.py
-      @@ -225,7 +225,7 @@ class CallBlocker:
+      @@ -228,7 +228,7 @@ class CallBlocker:
 
                    # ToDo: add that an event is only posted once if same full_number and e.g. not same minute
                    if TELEGRAM_BOT_URL:
       -                requests.get(TELEGRAM_BOT_URL + quote("CallBlocker: " + raw_line))
-      +                requests.get(TELEGRAM_BOT_URL + quote("CallBlocker: " + str(parsed_line)))
+      +                requests.get(TELEGRAM_BOT_URL + quote(f'CallBlocker:{cm_line.type} {raw_line}'))
 
 
        if __name__ == "__main__":
+
       EOF
       snapcraftctl build
     source: https://github.com/bufemc/a1fbox.git
